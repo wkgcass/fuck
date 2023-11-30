@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'org.slf4j'
+version = '2.0.9'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+dependencies {
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifactId 'slf4j-api'
+        }
+    }
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
