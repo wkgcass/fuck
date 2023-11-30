@@ -1,0 +1,37 @@
+### common gitignore
+
+# logs
+*.log
+
+# bin/lib
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.run
+*.bin
+*.jar
+
+# middle
+*.class
+*.o
+
+# vim
+*.swp
+
+# jetbrains
+**/.idea
+*.iml
+*.ipr
+*.iws
+
+# macOS
+.DS_Store
+
+# pack
+*.zip
+*.tar
+*.tar.gz
+*.rar
