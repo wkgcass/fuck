@@ -185,6 +185,9 @@ public final class LoggerFactory {
         }
     }
 
+    private static final String SUPPRESS_KEY = "org.slf4j:slf4j-api::suppress-no-provider-report";
+    private static final String SUPPRESS_VALUE = System.getProperty(SUPPRESS_KEY);
+
     private final static void bind() {
         try {
             List<SLF4JServiceProvider> providersList = findServiceProviders();
@@ -197,9 +200,13 @@ public final class LoggerFactory {
                 reportActualBinding(providersList);
             } else {
                 INITIALIZATION_STATE = NOP_FALLBACK_INITIALIZATION;
-                Util.report("No SLF4J providers were found.");
-                Util.report("Defaulting to no-operation (NOP) logger implementation");
-                Util.report("See " + NO_PROVIDERS_URL + " for further details.");
+                final String LEVEL_KEY = "slf4j.internal.verbosity";
+                if (!"true".equals(SUPPRESS_VALUE) && System.getProperty(LEVEL_KEY) == null) {
+                    Util.report("No SLF4J providers were found.");
+                    Util.report("Defaulting to no-operation (NOP) logger implementation");
+                    Util.report("See " + NO_PROVIDERS_URL + " for further details.");
+                    Util.report("Use -D" + SUPPRESS_KEY + "=true to disable this message.");
+                }
 
                 Set<URL> staticLoggerBinderPathSet = findPossibleStaticLoggerBinderPathSet();
                 reportIgnoredStaticLoggerBinders(staticLoggerBinderPathSet);
